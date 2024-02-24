@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:industry_app/constant.dart';
+import '../../size_config.dart';
+import 'components/body.dart';
+class ActivityScreen extends StatelessWidget {
+  static String routeName = "/activity_screen";
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return const Scaffold(
+      backgroundColor: backgroundColor,
+      body: SafeArea(child: SingleChildScrollView(child: Body(),)),
+    );
+  }
+}

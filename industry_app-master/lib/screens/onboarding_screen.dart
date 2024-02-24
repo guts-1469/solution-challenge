@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:industry_app/services/save_preference.dart';
+import 'package:intro_slider/intro_slider.dart';
+import 'package:industry_app/screens/login_page/sing_in_screen.dart';
+import 'package:industry_app/widgets/text.dart';
+import 'package:provider/provider.dart';
+
+class OnboardingScreen extends StatefulWidget {
+  static String routeName = "/onboarding_screen";
+  const OnboardingScreen({Key? key}) : super(key: key);
+
+  @override
+  OnboardingScreenState createState() => OnboardingScreenState();
+}
+
+class OnboardingScreenState extends State<OnboardingScreen> {
+  List<Slide> slides = [];
+  Color skipColor = Colors.white;
+  Future<void> setPreference() async {
+    SettingProvider settingProvider=Provider.of<SettingProvider>(context,listen:false);
+     settingProvider.setPrefrenceBool('firstTime', false);
+    print('hellp');
+    bool x=await settingProvider.getPrefrenceBool('firstTime');
+    print(x);
+  }
+  @override
+  void initState() {
+    setPreference();
+    super.initState();
+
+    slides.add(
+      Slide(
+        widgetTitle: const HeadingWidget(
+            text: "WIRELESS\n"
+                "MONITORING OF\n"
+                "TRASH EMPTYING"),
+        heightImage: 270,
+        widthImage: 270,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        pathImage: "assets/images/onboarding_1.png",
+        backgroundColor: Color(0xff20AF91),
+      ),
+    );
+    slides.add(
+      Slide(
+        heightImage: 300,
+        widthImage: 300,
+        widgetTitle: const HeadingWidget(
+          text: "TRACKING OF DUSTBIN\nUSING IOT &\nMACHINE LEARNING",
+
+        ),
+        description: "Ye indulgence unreserved connection alteration appearance",
+        pathImage: "assets/images/onboarding_2.png",
+        backgroundColor: const Color(0xffFEAE4F),
+      ),
+    );
+    slides.add(
+      Slide(
+
+
+        heightImage: 300,
+        widthImage: 300,
+        title: "RULER",
+        widgetTitle: const HeadingWidget(text: "RECYCLE WASTE FOOD\nIN EFFICIENT WAY"),
+        description: "Much evil soon high in hope do view. Out may few ",
+        pathImage: "assets/images/onboarding_3.png",
+        backgroundColor: const Color(0xff9932CC),
+      ),
+    );
+  }
+
+  void onDonePress() {
+    // Do what you want
+    Navigator.pushNamed(context, SignInScreen.routeName);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IntroSlider(
+      slides: slides,
+      hideStatusBar: true,
+      renderSkipBtn: const Text(
+        "SKIP",
+        style: TextStyle(color:
+        Colors.white
+        ),
+      ),
+      renderNextBtn: Text(
+        "NEXT",
+        style: TextStyle(color: skipColor),
+      ),
+      loopAutoScroll: false,
+      autoScroll: false,
+      onDonePress: onDonePress,
+    );
+  }
+}
